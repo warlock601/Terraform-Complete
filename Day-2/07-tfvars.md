@@ -45,12 +45,29 @@ variable "aws_secret_key" {
 }
 ```
 
+
 ```hcl
 # secrets.tfvars
 aws_access_key = "AKIA123..."
 aws_secret_key = "abcd1234..."
 ```
-"sensitive = true" makes sure that when a specific resource is created, all these values will not be displayed. 
+"sensitive = true" makes sure that when a specific resource is created, all these values will not be displayed. </br>
+To put a .tfvars file inside .gitignore, first we create a .gitignore file using "touch .gitignore" and then we basically put all those files names or format which we don't want to be committed alongwith other code.
+```sh
+# Ignore all tfvars files (used for secrets/variables)
+*.tfvars
+
+# Optionally ignore override files (also can contain secrets)
+*.tfvars.json
+terraform.tfvars
+
+# Optional: Ignore local state files too (contain sensitive data)
+*.tfstate
+*.tfstate.*
+.crash
+.terraform/
+.terraform.lock.hcl
+```
 - Store .tfvars securely in S3. This becomes very hectic process as every time we want to do apply, we need pull the .tfvars from S3 and if we forget, it will use the default values. We you can store .tfvars in S3 bucket and pull it before running Terraform:
 ```sh
 # Upload to S3
