@@ -50,4 +50,31 @@ variable "aws_secret_key" {
 aws_access_key = "AKIA123..."
 aws_secret_key = "abcd1234..."
 ```
-- Store .tfvars securely in S3. 
+"sensitive = true" makes sure that when a specific resource is created, all these values will not be displayed. 
+- Store .tfvars securely in S3. This becomes very hectic process as every time we want to do apply, we need pull the .tfvars from S3 and if we forget, it will use the default values. We you can store .tfvars in S3 bucket and pull it before running Terraform:
+```sh
+# Upload to S3
+aws s3 cp secrets.tfvars s3://my-secure-bucket/terraform/secrets.tfvars
+```
+
+```sh
+# Downliad before Terraform Apply
+aws s3 cp s3://my-secure-bucket/terraform/secrets.tfvars ./secrets.tfvars
+terraform apply -var-file=secrets.tfvars
+```
+We can also use SSE-KMS encryption inside S3 bucket to store these values securely inside S3. 
+
+- Instead of .tfvars, use secret managers: AWS SSM Parameter Store or AWS Secrets Manager, HashiCorp Vault. If we were to have secrets in .tfvars so instead we can use these secret managers as they provide additional functionalities like expiration, secret rotation etc.
+```hcl
+data "aws_ssm_parameter" "db_password" {
+  name = "/myapp/db_password"
+  with_decryption = true
+}
+
+variable "db_password" {
+  type      = string
+  sensitive = true
+  default   = data.aws_ssm_parameter.db_password.value
+}
+```
+
