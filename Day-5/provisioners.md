@@ -81,7 +81,7 @@ We can use provisioners in Terraform only on resources that have a compute/SSH c
 </br>
 Here are the examples of provisioners that we can use them for other than EC2: </br>
 
-- You can provision or seed a database using local-exec after creating the DB instance.
+- You can provision or seed a database using local-exec after creating the DB instance. Seeding a database means populating it with an initial, structured set of data, often using automated scripts, to provide a starting point for development, testing, or demonstrations
 ```hcl
 resource "aws_db_instance" "mysql" {
   # MySQL config
