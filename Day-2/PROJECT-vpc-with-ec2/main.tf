@@ -34,7 +34,7 @@ resource "aws_route_table_association" "rta1" {
   route_table_id = aws_route_table.RT.id
 }
 
-resource "aws_route_table_association" "rta2" {
+resource "aws_route_table_association" "rta2" {                         // Here we made both the subnets Public that's why we added Internet gateway as a route for both.
   subnet_id      = aws_subnet.sub2.id
   route_table_id = aws_route_table.RT.id
 }
