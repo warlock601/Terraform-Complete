@@ -6,7 +6,7 @@ resource "aws_subnet" "sub1" {
   vpc_id                  = aws_vpc.myvpc.id
   cidr_block              = "10.0.0.0/24"
   availability_zone       = "us-east-1a"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = true                              # controls whether EC2 instances launched in that subnet automatically receive a public IPv4 address.
 }
 
 resource "aws_subnet" "sub2" {
