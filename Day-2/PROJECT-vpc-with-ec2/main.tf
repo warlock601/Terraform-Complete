@@ -24,7 +24,7 @@ resource "aws_route_table" "RT" {
   vpc_id = aws_vpc.myvpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = "0.0.0.0/0"                                 # If traffic does not match any more specific route, send it to the Internet Gateway, default route for outbound traffic.
     gateway_id = aws_internet_gateway.igw.id
   }
 }
